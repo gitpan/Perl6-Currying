@@ -1,0 +1,77 @@
+==============================================================================
+                  Release of version 0.01 of Perl6::Currying
+==============================================================================
+
+
+NAME
+    Perl6::Currying - Perl 6 curried closure syntax for Perl 5
+
+SYNOPSIS
+    use Perl6::Currying;
+
+    my $add = { $^a + $^b };        # Create a HOF that adds its two args
+
+    print $add->(1,2), "\n";        # Call it
+
+    my $incr = $add->(1);           # Bind the $x argument to 1
+				    # to create an increment HOF
+
+    print $incr->(3), "\n";         # Increment a number
+
+    @data{0..10} = ('A'..'Z');
+
+    # Use HOFs as map, grep, and sort blocks
+    print join ",", sort { $^y <=> $^x } 1..10;
+    print join "\n", map { $^value**2 } 1..10;
+    print join "\n", map { $data{$_-1}.$^value**2 } 1..10;
+    print join "\n", grep { $data{$^value} } 1..10;
+
+    my $div = { $^x / $^y };        # Create a HOF that divides its two args
+
+    print $div->(1,2), "\n";        # Do a division
+
+    my $half = $div->({y=>2});      # Bind the denominator to 2
+				    # to create a halving HOF
+
+    print $half->(42), "\n";        # Half of something
+    print $half->({x=>42}), "\n";   # Same thing via binding
+
+    my $twelfth = $half->({y=>12}); # Rebind the denominator
+    print $twelfth->(24), "\n";     # A twelfth of something
+
+    my $bad = $half->({q=>12}), "\n";       # Error: no such parameter
+
+DESCRIPTION
+
+    The Perl6::Currying module lets you try out the new Perl 6 implicit
+    higher-order function syntax in Perl 5.
+
+DEPENDENCIES
+    The module is implemented using Filter::Simple and requires that module
+    to be installed.
+
+AUTHOR
+    Damian Conway (damian@conway.org)
+
+COPYRIGHT
+    Copyright (c) 2001, Damian Conway. All Rights Reserved.
+    This module is free software. It may be used, redistributed
+    and/or modified under the same terms as Perl itself.
+
+
+==============================================================================
+
+CHANGES IN VERSION 0.01
+
+(No changes have been documented for this version)
+
+==============================================================================
+
+AVAILABILITY
+
+Perl6::Currying has been uploaded to the CPAN
+and is also available from:
+
+	http://www.csse.monash.edu.au/~damian/CPAN/Perl6-Currying.tar.gz
+
+==============================================================================

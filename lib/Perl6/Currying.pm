@@ -73,8 +73,8 @@ Perl6::Currying - Perl 6 curried closure syntax for Perl 5
 
 =head1 VERSION
 
-This document describes version 0.01 of Perl6::Currying,
-released May 14, 2002.
+This document describes version 0.03 of Perl6::Currying,
+released May 15, 2002.
 
 =head1 SYNOPSIS
 
@@ -118,8 +118,8 @@ released May 14, 2002.
 The Perl6::Currying module lets you try out the new Perl 6 implicit 
 higher-order function syntax in Perl 5.
 
-Perl 6 reserves all variables of the form C<$^name>
-as "placeholders" that can be used to generate higher order functions.
+Perl 6 reserves all variables of the form C<$^name> or C<@^name> or
+C<%^name> as "placeholders" that can be used to generate higher order functions.
 
 Any block containing one or more such placeholders
 is treated as a reference to a subroutine in which the
@@ -224,6 +224,8 @@ expression like so:
 
         { $^a == $^b**2 * $^c or die $^err_msg }->($i,$j,$k,$msg);
 
+Note that the placeholders are restricted to scalars (though a future
+release may support array and hash parameters too).
 
 The placeholders are sorted ASCIIbetically before they are used
 to create the subroutine's parameter list. Hence the following:

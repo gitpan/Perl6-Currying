@@ -1,5 +1,5 @@
 ==============================================================================
-                  Release of version 0.01 of Perl6::Currying
+                  Release of version 0.03 of Perl6::Currying
 ==============================================================================
 
 
@@ -61,9 +61,11 @@ COPYRIGHT
 
 ==============================================================================
 
-CHANGES IN VERSION 0.01
+CHANGES IN VERSION 0.03
 
-(No changes have been documented for this version)
+
+	- Correctly added Filter::Simple as a prerequisite :-(
+
 
 ==============================================================================
 

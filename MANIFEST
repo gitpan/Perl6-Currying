@@ -4,3 +4,4 @@ MANIFEST
 Makefile.PL
 test.pl
 demo.pl
+demo_indir.pl

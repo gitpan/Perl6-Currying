@@ -1,30 +1,34 @@
-print "starting...";
-
 use Perl6::Currying;
 
-my $add = { $^a + $^b };
+sub add($a,$b) { $a + $b }
 
-print $add->(1,2), "\n";
+my $incr = &add.prebind(b=>1);
 
-my $incr = $add->(1);
+print $incr->(7), "\n";
 
-print $incr->(3), "\n";
+my $div =  sub ($x, $y) { $x / $y };
 
-@data{0..10} = ('A'..'Z');
+print $div->(22,7), "\n";
 
-print join ",", sort { $^y <=> $^x } 1..10;            print "\n=======\n";
-print join "\n", map { $^value**2 } 1..10;             print "\n=======\n";
-print join "\n", map { $data{$_-1}.$^value**2 } 1..10; print "\n=======\n";
-print join "\n", map { $data{$^value} } 1..10;         print "\n=======\n";
+my $half_of = &$div.prebind(y=>2);
+my $reciprocal = $div.prebind(x=>1);
 
-my $div = { $^x / $^y };
+print $half_of->(7), "\n";
+print $reciprocal->(7), "\n";
 
-print $div->(1,2), "\n";
+my $pi_ish = &$div.prebind(y=>7, x=>22);
 
-my $half = $div->({y=>2});
+print $pi_ish->(), "\n";
 
-print $half->(42), "\n";
-print $half->({x=>42}), "\n";
-my $twelfth = $half->({y=>12});
-print $twelfth->(24), "\n";
-my $bad = $half->({q=>12}), "\n";
+my $one_half = &{$half_of}.prebind(x=>1);
+
+print $one_half->(), "\n";
+
+sub getdiv { return $div };
+
+my $tenth = &{getdiv()}.prebind(y=>10);
+
+print $tenth->(7), "\n";
+
+eval { my $bad = $tenth.prebind(y=>'???') } or print $@;
+eval { my $bad = $div.prebind(q=>'???') } or print $@;

@@ -1,34 +1,26 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl test.pl'
-
-######################### We start with some black magic to print on failure.
-
-# Change 1..1 below to 1..last_test_to_print .
-# (It may become useful if the test is moved to ./t subdirectory.)
-
-BEGIN { $| = 1; print "1..10\n"; }
+BEGIN { $| = 1; print "1..7\n"; }
 END {print "not ok 1\n" unless $loaded;}
 use Perl6::Currying;
 $loaded = 1;
 print "ok 1\n";
 
-######################### End of black magic.
-
-# Insert your test code below (better if it prints "ok 13"
-# (correspondingly "not ok 13") depending on the success of chunk 13
-# of the test code):
-
-my $print = { print "$^ok $^val\n" };
+my $print = sub ($ok,$val) { print "$ok $val\n" };
 
 $print->("ok",2);
 
-my $ok = $print->("ok");
+my $ok = $print.prebind(ok=>"ok");
 $ok->(3);
 
-my $four = $print->({val=>4});
+my $four = $print.prebind(val=>4);
 $four->("ok");
 
-$ok->($_) foreach grep { $^x > 4 }
-		    map { $^n-10 }
-		      sort { $^i <=> $^j } reverse 11..20;
-		      
+
+sub show($ok, $val) { print "$ok $val\n" }
+
+show("ok",5);
+
+$ok = &show.prebind(ok=>"ok");
+$ok->(6);
+
+*seven = prebind &show: (val=>7);
+seven("ok");
